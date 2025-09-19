@@ -1,0 +1,15 @@
+public void Print() // Print Contacts
+        {
+            int consoleWidth = Console.WindowWidth; // Get the console width
+            int tableWidth = 65; // Total table width (adjusted for column formatting)
+            int leftPadding = Math.Max(0, (consoleWidth - tableWidth) / 2);
+            string separator = new string('-', tableWidth);
+            Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", "Name", "Phone Number", "Group", "City");
+            Console.WriteLine(new string(' ', leftPadding) + separator);
+
+        // Print the table data in a nicely aligned way
+        for (int i = 0; i < count; i++)
+            {
+                Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
+            }
+        }
