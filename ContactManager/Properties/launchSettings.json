@@ -1,0 +1,25 @@
+{
+  "profiles": {
+    "ContactManager": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "externalConsole": false
+    },
+    "ContactManager (External Terminal)": {
+      "commandName": "Executable",
+      "executablePath": "powershell.exe",
+      "commandLineArgs": "-ExecutionPolicy Bypass -File \"LaunchExternal.ps1\"",
+      "workingDirectory": ".",
+      "externalConsole": true,
+      "launchBrowser": false
+    },
+    "ContactManager (Command Prompt)": {
+      "commandName": "Executable", 
+      "executablePath": "cmd.exe",
+      "commandLineArgs": "/c \"LaunchExternal.bat\"",
+      "workingDirectory": ".",
+      "externalConsole": true,
+      "launchBrowser": false
+    }
+  }
+}

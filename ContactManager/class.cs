@@ -127,26 +127,93 @@ public class Class1D
                 return;
             }
             
-            int consoleWidth = Console.WindowWidth; // Get the console width
-            int tableWidth = 65; // Total table width (adjusted for column formatting)
-
-        // Calculate left padding to center-align the table
-            int leftPadding = Math.Max(0, (consoleWidth - tableWidth) / 2);
-
-            string separator = new string('-', tableWidth);
-
-        // Print the header with column names
-            Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", "Name", "Phone Number", "Group", "City");
-            Console.WriteLine(new string(' ', leftPadding) + separator);
-
-        // Print the table data in a nicely aligned way
-        for (int i = 0; i < count; i++)
+            var terminalManager = TerminalManager.Instance;
+            var layout = terminalManager.GetLayoutRecommendation();
+            
+            // Use different display methods based on screen size
+            switch (layout.ScreenSize)
             {
-                Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
+                case ResponsiveUI.ScreenSize.Small:
+                    PrintContactsAsCards();
+                    break;
+                case ResponsiveUI.ScreenSize.Medium:
+                    PrintContactsAsCompactTable();
+                    break;
+                default:
+                    PrintContactsAsFullTable();
+                    break;
             }
             
             Console.WriteLine();
             ui.ShowSuccessMessage($"Displayed {count} contacts.");
+        }
+        
+        private void PrintContactsAsCards()
+        {
+            Console.WriteLine();
+            for (int i = 0; i < count; i++)
+            {
+                ResponsiveUI.PrintContactCard(table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
+                if (i < count - 1)
+                {
+                    Console.WriteLine(); // Space between cards
+                }
+            }
+        }
+        
+        private void PrintContactsAsCompactTable()
+        {
+            // Prepare data for responsive table
+            string[] headers = { "Name", "Phone", "Group", "City" };
+            string[][] data = new string[count][];
+            
+            for (int i = 0; i < count; i++)
+            {
+                data[i] = new string[] { table[i, 0], table[i, 1], table[i, 2], table[i, 3] };
+            }
+            
+            ResponsiveUI.PrintResponsiveTable(headers, data);
+        }
+        
+        private void PrintContactsAsFullTable()
+        {
+            int consoleWidth = ResponsiveUI.GetSafeConsoleWidth();
+            int tableWidth = Math.Min(consoleWidth - 4, 80); // Leave margin and cap width
+            
+            // Calculate column widths dynamically
+            int nameWidth = Math.Max(12, tableWidth / 4);
+            int phoneWidth = Math.Max(12, tableWidth / 4);
+            int groupWidth = Math.Max(8, tableWidth / 6);
+            int cityWidth = tableWidth - nameWidth - phoneWidth - groupWidth - 3; // 3 for separators
+            
+            // Calculate left padding to center-align the table
+            int leftPadding = Math.Max(0, (consoleWidth - tableWidth) / 2);
+            string padding = new string(' ', leftPadding);
+
+            // Create dynamic format string
+            string headerFormat = $"{{0,-{nameWidth}}} {{1,-{phoneWidth}}} {{2,-{groupWidth}}} {{3,-{cityWidth}}}";
+            string separator = new string('─', tableWidth);
+
+            // Print the header with column names
+            Console.WriteLine(padding + "┌" + separator + "┐");
+            Console.WriteLine(padding + "│" + string.Format(headerFormat, 
+                ResponsiveUI.TruncateText("Name", nameWidth),
+                ResponsiveUI.TruncateText("Phone", phoneWidth),
+                ResponsiveUI.TruncateText("Group", groupWidth),
+                ResponsiveUI.TruncateText("City", cityWidth)) + "│");
+            Console.WriteLine(padding + "├" + separator + "┤");
+
+            // Print the table data
+            for (int i = 0; i < count; i++)
+            {
+                Console.WriteLine(padding + "│" + string.Format(headerFormat,
+                    ResponsiveUI.TruncateText(table[i, 0], nameWidth),
+                    ResponsiveUI.TruncateText(table[i, 1], phoneWidth),
+                    ResponsiveUI.TruncateText(table[i, 2], groupWidth),
+                    ResponsiveUI.TruncateText(table[i, 3], cityWidth)) + "│");
+            }
+            
+            Console.WriteLine(padding + "└" + separator + "┘");
         }
         // Delete Contacts
         public void delete(string name)
@@ -184,12 +251,16 @@ public class Class1D
                     ui.Center($"Current details for: {name}");
                     ui.line();
                     
-                    // Show current details
-                    Console.WriteLine($"Current Name          : {table[i, 0]}");
-                    Console.WriteLine($"Current Phone Number  : {table[i, 1]}");
-                    Console.WriteLine($"Current Group         : {table[i, 2]}");
-                    Console.WriteLine($"Current City          : {table[i, 3]}");
+                    // Show current details using responsive form layout
+                    ui.DisplayFormField("Current Name", table[i, 0]);
+                    ui.DisplayFormField("Current Phone", table[i, 1]);
+                    ui.DisplayFormField("Current Group", table[i, 2]);
+                    ui.DisplayFormField("Current City", table[i, 3]);
+                    
                     ui.line();
+                    ui.AddSpacing(1);
+                    
+                    ui.Center("Enter new details:");
                     ui.AddSpacing(1);
                     
                     // Get new details with validation
@@ -214,6 +285,7 @@ public class Class1D
                     table[i, 1] = newPhone;
                     table[i, 2] = newGroup;
                     table[i, 3] = newCity;
+                    table[i, 3] = newCity;
                     
                     ui.ShowSuccessMessage("Contact updated successfully!");
                     return;
@@ -235,124 +307,199 @@ public class Class1D
         public void searchname(string name)
         {
             UI ui = new UI();
-            int consoleWidth = Console.WindowWidth;
-            int tableWidth = 65;
-            int leftPadding = Math.Max(0, (consoleWidth - tableWidth) / 2);
-            string separator = new string('-', tableWidth);
-            bool found = false;
+            List<int> foundIndices = new List<int>();
             
-            Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", "Name", "Phone Number", "Group", "City");
-            Console.WriteLine(new string(' ', leftPadding) + separator);
-            
+            // Find all matching contacts
             for (int i = 0; i < count; i++)
             {
                 if (table[i, 0].Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", 
-                        table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
-                    found = true;
+                    foundIndices.Add(i);
                 }
             }
             
-            if (!found)
+            if (foundIndices.Count == 0)
             {
                 ui.AddSpacing(1);
                 ui.ShowWarningMessage($"No contact found with name: {name}");
+                ui.AddSpacing(1);
+                return;
             }
-            ui.AddSpacing(1);
+            
+            // Display results using responsive layout
+            DisplaySearchResults(foundIndices, $"Search Results for Name: {name}");
         }
 
         // Search Contacts by Group                    linear search
         public void searchgroup(string group)
         {
             UI ui = new UI();
-            int consoleWidth = Console.WindowWidth;
-            int tableWidth = 65;
-            int leftPadding = Math.Max(0, (consoleWidth - tableWidth) / 2);
-            string separator = new string('-', tableWidth);
-            bool found = false;
+            List<int> foundIndices = new List<int>();
             
-            Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", "Name", "Phone Number", "Group", "City");
-            Console.WriteLine(new string(' ', leftPadding) + separator);
-
+            // Find all matching contacts
             for (int i = 0; i < count; i++)
             {
                 if (table[i, 2].Equals(group, StringComparison.OrdinalIgnoreCase))
                 {
-                   Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", 
-                       table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
-                   found = true;
+                    foundIndices.Add(i);
                 }
             }
             
-            if (!found)
+            if (foundIndices.Count == 0)
             {
                 ui.AddSpacing(1);
                 ui.ShowWarningMessage($"No contacts found in group: {group}");
+                ui.AddSpacing(1);
+                return;
             }
-            ui.AddSpacing(1);
+            
+            // Display results using responsive layout
+            DisplaySearchResults(foundIndices, $"Search Results for Group: {group}");
         }
 
         // Search Contacts by City                     linear search
         public void searchcity(string city)
         {
             UI ui = new UI();
-            int consoleWidth = Console.WindowWidth;
-            int tableWidth = 65;
-            int leftPadding = Math.Max(0, (consoleWidth - tableWidth) / 2);
-            string separator = new string('-', tableWidth);
-            bool found = false;
+            List<int> foundIndices = new List<int>();
             
-            Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", "Name", "Phone Number", "Group", "City");
-            Console.WriteLine(new string(' ', leftPadding) + separator);
-
+            // Find all matching contacts
             for (int i = 0; i < count; i++)
             {
                 if (table[i, 3].Equals(city, StringComparison.OrdinalIgnoreCase))
                 {
-                     Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", 
-                         table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
-                     found = true;
+                    foundIndices.Add(i);
                 }
             }
             
-            if (!found)
+            if (foundIndices.Count == 0)
             {
                 ui.AddSpacing(1);
                 ui.ShowWarningMessage($"No contacts found in city: {city}");
+                ui.AddSpacing(1);
+                return;
             }
-            ui.AddSpacing(1);
+            
+            // Display results using responsive layout
+            DisplaySearchResults(foundIndices, $"Search Results for City: {city}");
         }
 
-        // Search Contacts by Phone Number             linear search
+        // Search Contacts by Phone                    linear search
         public void searchphone(string phone)
         {
             UI ui = new UI();
-            int consoleWidth = Console.WindowWidth;
-            int tableWidth = 65;
-            int leftPadding = Math.Max(0, (consoleWidth - tableWidth) / 2);
-            string separator = new string('-', tableWidth);
-            bool found = false;
+            List<int> foundIndices = new List<int>();
             
-            Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", "Name", "Phone Number", "Group", "City");
-            Console.WriteLine(new string(' ', leftPadding) + separator);
-            
+            // Find all matching contacts (exact match for phone)
             for (int i = 0; i < count; i++)
             {
                 if (table[i, 1].Equals(phone, StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine(new string(' ', leftPadding) + "{0,-20} {1,-15} {2,-10} {3,-20}", 
-                        table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
-                    found = true;
+                    foundIndices.Add(i);
                 }
             }
             
-            if (!found)
+            if (foundIndices.Count == 0)
             {
                 ui.AddSpacing(1);
-                ui.ShowWarningMessage($"No contact found with phone number: {phone}");
+                ui.ShowWarningMessage($"No contact found with phone: {phone}");
+                ui.AddSpacing(1);
+                return;
             }
+            
+            // Display results using responsive layout
+            DisplaySearchResults(foundIndices, $"Search Results for Phone: {phone}");
+        }
+        
+        // Helper method to display search results responsively
+        private void DisplaySearchResults(List<int> indices, string title)
+        {
+            UI ui = new UI();
+            var terminalManager = TerminalManager.Instance;
+            var layout = terminalManager.GetLayoutRecommendation();
+            
             ui.AddSpacing(1);
+            ui.Center(title);
+            ui.line();
+            ui.AddSpacing(1);
+            
+            // Use different display methods based on screen size
+            switch (layout.ScreenSize)
+            {
+                case ResponsiveUI.ScreenSize.Small:
+                    DisplaySearchResultsAsCards(indices);
+                    break;
+                case ResponsiveUI.ScreenSize.Medium:
+                    DisplaySearchResultsAsCompactTable(indices);
+                    break;
+                default:
+                    DisplaySearchResultsAsFullTable(indices);
+                    break;
+            }
+            
+            ui.AddSpacing(1);
+            ui.ShowSuccessMessage($"Found {indices.Count} contact(s).");
+        }
+        
+        private void DisplaySearchResultsAsCards(List<int> indices)
+        {
+            foreach (int i in indices)
+            {
+                ResponsiveUI.PrintContactCard(table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
+                Console.WriteLine();
+            }
+        }
+        
+        private void DisplaySearchResultsAsCompactTable(List<int> indices)
+        {
+            string[] headers = { "Name", "Phone", "Group", "City" };
+            string[][] data = new string[indices.Count][];
+            
+            for (int j = 0; j < indices.Count; j++)
+            {
+                int i = indices[j];
+                data[j] = new string[] { table[i, 0], table[i, 1], table[i, 2], table[i, 3] };
+            }
+            
+            ResponsiveUI.PrintResponsiveTable(headers, data);
+        }
+        
+        private void DisplaySearchResultsAsFullTable(List<int> indices)
+        {
+            int consoleWidth = ResponsiveUI.GetSafeConsoleWidth();
+            int tableWidth = Math.Min(consoleWidth - 4, 80);
+            
+            // Calculate column widths dynamically
+            int nameWidth = Math.Max(12, tableWidth / 4);
+            int phoneWidth = Math.Max(12, tableWidth / 4);
+            int groupWidth = Math.Max(8, tableWidth / 6);
+            int cityWidth = tableWidth - nameWidth - phoneWidth - groupWidth - 3;
+            
+            int leftPadding = Math.Max(0, (consoleWidth - tableWidth) / 2);
+            string padding = new string(' ', leftPadding);
+            string headerFormat = $"{{0,-{nameWidth}}} {{1,-{phoneWidth}}} {{2,-{groupWidth}}} {{3,-{cityWidth}}}";
+            string separator = new string('─', tableWidth);
+
+            // Print the header with column names
+            Console.WriteLine(padding + "┌" + separator + "┐");
+            Console.WriteLine(padding + "│" + string.Format(headerFormat, 
+                ResponsiveUI.TruncateText("Name", nameWidth),
+                ResponsiveUI.TruncateText("Phone", phoneWidth),
+                ResponsiveUI.TruncateText("Group", groupWidth),
+                ResponsiveUI.TruncateText("City", cityWidth)) + "│");
+            Console.WriteLine(padding + "├" + separator + "┤");
+
+            // Print matching contacts
+            foreach (int i in indices)
+            {
+                Console.WriteLine(padding + "│" + string.Format(headerFormat,
+                    ResponsiveUI.TruncateText(table[i, 0], nameWidth),
+                    ResponsiveUI.TruncateText(table[i, 1], phoneWidth),
+                    ResponsiveUI.TruncateText(table[i, 2], groupWidth),
+                    ResponsiveUI.TruncateText(table[i, 3], cityWidth)) + "│");
+            }
+            
+            Console.WriteLine(padding + "└" + separator + "┘");
         }
 
      /*  // Search Contacts by Group and Copy           linear search

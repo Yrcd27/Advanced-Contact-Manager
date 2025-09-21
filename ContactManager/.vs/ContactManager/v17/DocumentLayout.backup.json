@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\ContactManager\\ContactManager\\",
+  "WorkspaceRootPath": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|d:\\contactmanager\\contactmanager\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|f:\\3rd sem projects\\dsa project\\contactmanager\\contactmanager\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|solutionrelative:class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|d:\\contactmanager\\contactmanager\\ui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|f:\\3rd sem projects\\dsa project\\contactmanager\\contactmanager\\ui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|solutionrelative:ui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|d:\\contactmanager\\contactmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|f:\\3rd sem projects\\dsa project\\contactmanager\\contactmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|d:\\contactmanager\\contactmanager\\firstscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|f:\\3rd sem projects\\dsa project\\contactmanager\\contactmanager\\firstscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B0649BAC-108A-BBF5-9B1A-4DFC8B0D3766}|ContactManager.csproj|solutionrelative:firstscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -36,9 +36,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "UI.cs",
-              "DocumentMoniker": "D:\\ContactManager\\ContactManager\\UI.cs",
+              "DocumentMoniker": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\UI.cs",
               "RelativeDocumentMoniker": "UI.cs",
-              "ToolTip": "D:\\ContactManager\\ContactManager\\UI.cs",
+              "ToolTip": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\UI.cs",
               "RelativeToolTip": "UI.cs",
               "ViewState": "AgIAAGAAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -48,9 +48,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "program.cs",
-              "DocumentMoniker": "D:\\ContactManager\\ContactManager\\program.cs",
+              "DocumentMoniker": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\program.cs",
               "RelativeDocumentMoniker": "program.cs",
-              "ToolTip": "D:\\ContactManager\\ContactManager\\program.cs",
+              "ToolTip": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\program.cs",
               "RelativeToolTip": "program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -60,9 +60,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "firstscreen.cs",
-              "DocumentMoniker": "D:\\ContactManager\\ContactManager\\firstscreen.cs",
+              "DocumentMoniker": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\firstscreen.cs",
               "RelativeDocumentMoniker": "firstscreen.cs",
-              "ToolTip": "D:\\ContactManager\\ContactManager\\firstscreen.cs",
+              "ToolTip": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\firstscreen.cs",
               "RelativeToolTip": "firstscreen.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -72,11 +72,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "class.cs",
-              "DocumentMoniker": "D:\\ContactManager\\ContactManager\\class.cs",
+              "DocumentMoniker": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\class.cs",
               "RelativeDocumentMoniker": "class.cs",
-              "ToolTip": "D:\\ContactManager\\ContactManager\\class.cs",
+              "ToolTip": "F:\\3rd Sem Projects\\DSA Project\\ContactManager\\ContactManager\\class.cs",
               "RelativeToolTip": "class.cs",
-              "ViewState": "AgIAACkBAAAAAAAAAAAQwGMBAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAANMDAAAAAAAAAAAcwOcDAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T11:45:13.374Z",
               "EditorCaption": ""

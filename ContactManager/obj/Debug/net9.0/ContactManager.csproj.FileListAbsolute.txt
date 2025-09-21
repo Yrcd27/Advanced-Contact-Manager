@@ -40,3 +40,18 @@ D:\ContactManager\ContactManager\obj\Debug\net9.0\refint\ContactManager.dll
 D:\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.pdb
 D:\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.genruntimeconfig.cache
 D:\ContactManager\ContactManager\obj\Debug\net9.0\ref\ContactManager.dll
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\bin\Debug\net9.0\ContactManager.exe
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\bin\Debug\net9.0\ContactManager.deps.json
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\bin\Debug\net9.0\ContactManager.runtimeconfig.json
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\bin\Debug\net9.0\ContactManager.dll
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\bin\Debug\net9.0\ContactManager.pdb
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.GeneratedMSBuildEditorConfig.editorconfig
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.AssemblyInfoInputs.cache
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.AssemblyInfo.cs
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.csproj.CoreCompileInputs.cache
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.sourcelink.json
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.dll
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\refint\ContactManager.dll
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.pdb
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ContactManager.genruntimeconfig.cache
+F:\3rd Sem Projects\DSA Project\ContactManager\ContactManager\obj\Debug\net9.0\ref\ContactManager.dll

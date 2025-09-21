@@ -1,21 +1,55 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class ContactManagerApp
 {
     private Class2D contacts;
     private NavigationManager nav;
     private UI ui;
+    private TerminalManager terminalManager;
 
     public ContactManagerApp(Class2D contacts, NavigationManager nav)
     {
         this.contacts = contacts;
         this.nav = nav;
         this.ui = new UI();
+        this.terminalManager = TerminalManager.Instance;
+        
+        // Initialize responsive UI system
+        InitializeResponsiveSystem();
+    }
+    
+    private void InitializeResponsiveSystem()
+    {
+        // Ensure minimum terminal size
+        ResponsiveUI.EnsureMinimumSize();
+        
+        // Only start monitoring if we're in an external terminal
+        if (ExternalTerminalLauncher.IsRunningInExternalTerminal())
+        {
+            // Start monitoring terminal size changes
+            terminalManager.StartMonitoring();
+            
+            // Subscribe to size change events
+            terminalManager.SizeChanged += OnTerminalSizeChanged;
+        }
+    }
+    
+    private void OnTerminalSizeChanged(int newWidth, int newHeight)
+    {
+        // Handle terminal size changes
+        // Could refresh current screen or show notification
+        // For now, we just update the layout recommendation
+        var layout = terminalManager.GetLayoutRecommendation();
     }
 
     public void Run()
     {
         string currentScreen = "home";
+        
+        // Show welcome message with terminal info
+        ShowWelcomeMessage();
         
         while (true)
         {
@@ -61,6 +95,51 @@ public class ContactManagerApp
             }
         }
     }
+    
+    private void ShowWelcomeMessage()
+    {
+        var layout = terminalManager.GetLayoutRecommendation();
+        bool isExternal = ExternalTerminalLauncher.IsRunningInExternalTerminal();
+        
+        if (layout.ScreenSize != ResponsiveUI.ScreenSize.Small)
+        {
+            ui.ClearScreen();
+            ui.AddSpacing(1);
+            
+            if (isExternal)
+            {
+                ui.Center("🚀 Contact Manager - External Terminal Mode 🚀");
+                ui.AddSpacing(1);
+                ui.Center("Optimized for the best user experience!");
+            }
+            else
+            {
+                ui.Center("📱 Contact Manager - Responsive Mode 📱");
+                ui.AddSpacing(1);
+                ui.Center("Running in integrated terminal");
+            }
+            
+            ui.AddSpacing(1);
+            
+            // Show terminal info for debugging (optional)
+            if (layout.ScreenSize == ResponsiveUI.ScreenSize.ExtraLarge)
+            {
+                var info = terminalManager.GetTerminalInfo();
+                ResponsiveUI.CenterText($"Terminal: {info.Width}x{info.Height} ({info.ScreenSize})");
+                if (isExternal)
+                {
+                    ResponsiveUI.CenterText("✅ External Terminal Detected");
+                }
+                else
+                {
+                    ResponsiveUI.CenterText("ℹ️ Integrated Terminal Detected");
+                }
+                ui.AddSpacing(1);
+            }
+            
+            ui.ShowLoadingAnimation("Initializing", 1);
+        }
+    }
 
     private string ShowHomeScreen()
     {
@@ -69,23 +148,52 @@ public class ContactManagerApp
         ui.ClearScreen();
         ui.ShowLoadingAnimation("Loading....", 1);
         ui.ClearScreen();
+        
+        // Show breadcrumb navigation for larger screens
+        nav.ShowBreadcrumb();
+        
         ui.line();
         ui.logo();
         ui.line();
         ui.AddSpacing(2);
 
-        List<string> items = new List<string> { 
-            "- Add contact     ......................................... 1", 
-            "- Search contact  ......................................... 2", 
-            "- View all        ......................................... 3",
-            "- Modify contact  ......................................... 4",
-            "- Delete contact  ......................................... 5",
-            "- Import data     ......................................... 6",
-            "- Export data     ......................................... 7"
-        };
+        var layout = terminalManager.GetLayoutRecommendation();
+        
+        List<string> items;
+        if (layout.UseCompactMode)
+        {
+            // Compact menu for small screens
+            items = new List<string> { 
+                "Add contact ................... 1", 
+                "Search contact ................ 2", 
+                "View all ...................... 3",
+                "Modify contact ................ 4",
+                "Delete contact ................ 5",
+                "Import data ................... 6",
+                "Export data ................... 7"
+            };
+        }
+        else
+        {
+            // Full menu for larger screens
+            items = new List<string> { 
+                "- Add contact     ......................................... 1", 
+                "- Search contact  ......................................... 2", 
+                "- View all        ......................................... 3",
+                "- Modify contact  ......................................... 4",
+                "- Delete contact  ......................................... 5",
+                "- Import data     ......................................... 6",
+                "- Export data     ......................................... 7"
+            };
+        }
+        
         ui.ListMaker(7, items);
 
         ui.AddSpacing(3);
+        
+        // Show quick help for larger screens
+        nav.ShowQuickHelp();
+        
         nav.ShowNavigationOptions();
 
         string? input = Console.ReadLine();
@@ -111,13 +219,31 @@ public class ContactManagerApp
         ui.ClearScreen();
         ui.ShowLoadingAnimation("Loading....", 1);
         ui.ClearScreen();
+        
+        // Show breadcrumb navigation
+        nav.ShowBreadcrumb();
+        
         ui.line();
         ui.Center("ADD NEW CONTACT");
         ui.line();
         ui.AddSpacing(2);
 
+        var layout = terminalManager.GetLayoutRecommendation();
+
         try
         {
+            if (layout.UseCompactMode)
+            {
+                // Compact form for small screens
+                ui.Center("Enter contact details:");
+                ui.AddSpacing(1);
+            }
+            else
+            {
+                ui.Center("Please enter the contact information below:");
+                ui.AddSpacing(2);
+            }
+
             string name = ui.GetValidatedInput("Enter Name", 
                 input => !string.IsNullOrWhiteSpace(input), 
                 "Name cannot be empty");
@@ -136,6 +262,15 @@ public class ContactManagerApp
 
             contacts.Add(name, phone, group, city);
             ui.ShowSuccessMessage("Contact added successfully!");
+            
+            // Show added contact details
+            if (!layout.UseCompactMode)
+            {
+                ui.AddSpacing(1);
+                ui.Center("Contact Details:");
+                ui.AddSpacing(1);
+                ui.DisplayContact(name, phone, group, city);
+            }
         }
         catch (Exception ex)
         {
@@ -144,11 +279,24 @@ public class ContactManagerApp
 
         ui.AddSpacing(2);
         
-        List<string> options = new List<string> { 
-            "Add Another Contact : 1", 
-            "Save to File : 2",
-            "View All Contacts : 3"
-        };
+        List<string> options;
+        if (layout.UseCompactMode)
+        {
+            options = new List<string> { 
+                "Add Another : 1", 
+                "Save : 2",
+                "View All : 3"
+            };
+        }
+        else
+        {
+            options = new List<string> { 
+                "Add Another Contact : 1", 
+                "Save to File : 2",
+                "View All Contacts : 3"
+            };
+        }
+        
         nav.ShowNavigationOptions(options);
 
         string? input = Console.ReadLine();

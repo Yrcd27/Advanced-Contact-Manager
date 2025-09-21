@@ -1,262 +1,142 @@
-# Contact Manager - DSA Project
+# Contact Manager - Advanced DSA Project
 
-A comprehensive contact management system implemented in C# using Data Structures and Algorithms concepts. This project demonstrates various DSA implementations including dynamic arrays, multiple search algorithms, and five different sorting techniques.
+A comprehensive **Data Structures & Algorithms** implementation in C# featuring dynamic arrays, multiple search/sort algorithms, and performance analysis with a responsive console interface.
 
-## 🚀 Quick Start
+## 🚀 Tech Stack
+- **C# .NET 9.0** - Core application framework
+- **Dynamic 2D Arrays** - Self-expanding contact storage with capacity doubling
+- **Multiple Search Algorithms** - Linear O(n) and Binary O(log n) implementations
+- **5 Sorting Algorithms** - Complete comparison with runtime analysis
+- **Performance Monitoring** - Real-time algorithm efficiency measurement
+- **Cross-Platform Console** - Enhanced UI with terminal adaptation
 
-### Prerequisites
-- .NET 9.0 SDK or later
-- Windows PowerShell (for running commands)
-- Any C# compatible IDE (Visual Studio, VS Code, etc.)
+## 🎯 Quick Start
 
-### Running the Application
-
+### Run Options
 ```bash
-# Navigate to the project directory
-cd "ContactManager"
-
-# Build and run the project
-dotnet build
+# Smart launcher (detects VS Code and offers external terminal)
 dotnet run
+
+# External terminal (Visual Studio-like window)
+.\LaunchExternal.ps1
+
+# Traditional method
+dotnet build && dotnet run
 ```
 
-## 📁 Project Structure
+## 🆕 Core DSA Features
 
-```
-ContactManager/
-├── ContactManager/              # Main project folder
-│   ├── program.cs              # Entry point
-│   ├── class.cs                # Core data structures and algorithms
-│   ├── ContactManagerApp.cs    # Main application controller
-│   ├── NavigationManager.cs    # Navigation and flow control
-│   ├── UI.cs                   # User interface utilities
-│   ├── firstscreen.cs          # Main menu interface
-│   ├── addC.cs                 # Add contact functionality
-│   ├── deleteC.cs              # Delete contact functionality
-│   ├── modifyC.cs              # Modify contact functionality
-│   ├── SearchC.cs              # Search menu interface
-│   ├── searchBy*.cs            # Individual search operations
-│   ├── viewAll.cs              # View contacts with sorting
-│   ├── viewOp.cs               # View options menu
-│   ├── Contacts.txt            # Data persistence file
-│   └── ContactManager.csproj   # Project configuration
-└── README.md                   # This documentation
-```
+### � **Dynamic Data Structures**
+- **Auto-expanding 2D Arrays**: Capacity doubling when full (O(1) amortized insertion)
+- **Memory Management**: Efficient space utilization with minimal waste
+- **Navigation Stack**: Stack-based screen management for user flow
+- **Real-time Growth**: Dynamic allocation based on contact count
 
-## 🔧 Data Structures & Algorithms Implemented
+### 🔍 **Search Algorithm Implementation**
+- **Linear Search O(n)**: Sequential search through unsorted data
+- **Binary Search O(log n)**: Efficient search on sorted datasets
+- **Multi-field Support**: Name, Phone, Group, City search capabilities
+- **Algorithm Comparison**: Side-by-side performance analysis
 
-### Data Structures
-- **Dynamic 2D Array**: Self-expanding contact storage with automatic capacity doubling
-- **Navigation Stack**: For managing screen navigation and user flow
+### ⚡ **Sorting Algorithm Suite**
+- **Bubble Sort O(n²)**: Simple comparison-based sorting with optimizations
+- **Insertion Sort O(n²)**: Efficient for small datasets, adaptive behavior
+- **Selection Sort O(n²)**: In-place sorting with minimal memory usage
+- **Quick Sort O(n log n)**: Divide-and-conquer with pivot partitioning
+- **Merge Sort O(n log n)**: Stable sorting with guaranteed performance
 
-### Search Algorithms
-1. **Linear Search** - O(n) time complexity
-   - Search by Name, Phone, Group, City
-   - Case-insensitive matching
-2. **Binary Search** - O(log n) time complexity  
-   - Requires sorted data
-   - Implemented for Name, Group, City searches
+### 📊 **Performance Analysis System**
+- **Runtime Measurement**: Precise timing using `Stopwatch` class
+- **Algorithm Comparison**: Real-time performance metrics display
+- **Complexity Visualization**: Best/Average/Worst case analysis
+- **Memory Usage Tracking**: Space complexity demonstration
 
-### Sorting Algorithms (All implemented with runtime measurement)
-1. **Bubble Sort** - O(n²) time complexity
-2. **Insertion Sort** - O(n²) time complexity  
-3. **Selection Sort** - O(n²) time complexity
-4. **Quick Sort** - O(n log n) average case
-5. **Merge Sort** - O(n log n) guaranteed
+### 🎮 **Application Implementation**
+- **Complete CRUD Operations**: Add, Read, Update, Delete with data structure integration
+- **File I/O Management**: Persistent storage with dynamic array serialization
+- **Input Validation**: Robust error handling and data integrity checks
+- **User Interface**: Responsive console design that adapts to terminal capabilities
 
-## 📋 Features
+## 💡 DSA Concepts Demonstrated
 
-### Core Functionality
-- ✅ **CRUD Operations**: Complete Create, Read, Update, Delete operations
-- ✅ **Multiple Search Types**: Name, Phone Number, Group, City
-- ✅ **Dual Search Modes**: Linear and Binary search implementations
-- ✅ **Five Sorting Algorithms**: With performance metrics
-- ✅ **File Persistence**: Import/Export to Contacts.txt
-- ✅ **Dynamic Memory Management**: Auto-expanding arrays
+### Data Structure Operations
+1. **Dynamic Array Growth**: Automatic capacity doubling when threshold reached
+2. **Memory Allocation**: Efficient copying and expansion strategies  
+3. **Search Implementation**: Linear vs Binary search with sorted data prerequisites
+4. **Sort Analysis**: Comparative performance measurement across 5 algorithms
 
-### User Experience
-- ✅ **Professional UI**: Loading animations, centered layouts
-- ✅ **Robust Navigation**: Universal Back/Main Menu/Exit options
-- ✅ **Input Validation**: Comprehensive validation with error handling
-- ✅ **Colored Feedback**: Success (green), Error (red), Warning (yellow)
-- ✅ **Confirmation Dialogs**: For destructive operations
-- ✅ **Case-Insensitive Search**: User-friendly search operations
-
-### Technical Features
-- ✅ **Memory Efficient**: No recursive object creation, single instances
-- ✅ **Error Handling**: Comprehensive try-catch blocks
-- ✅ **Cross-Platform Paths**: Uses relative paths for portability
-- ✅ **Performance Monitoring**: Runtime measurement for sorting algorithms
-
-## 💾 Data Management
-
-### File Format
-The application uses `Contacts.txt` for data persistence with a fixed-width format:
-
-```
-Name                 Phone Number    Group      City                
------------------------------------------------------------------
-John_Doe             1234567890      Friends    NewYork
-Jane_Smith           0987654321      Family     LosAngeles
-```
-
-### Import/Export Operations
-- **Export (Option 7)**: Saves all contacts to `Contacts.txt`
-- **Import (Option 6)**: Loads contacts from `Contacts.txt`
-- **Automatic Expansion**: Dynamic array grows as needed during import
-- **Error Handling**: File existence validation and user feedback
-
-## 🎮 User Interface
-
-### Navigation System
-- **B**: Go back to previous screen
-- **M**: Return to main menu  
-- **0**: Exit application (with confirmation)
-
-### Main Menu Options
-1. **Add Contact** - Add new contact with validation
-2. **View Contacts** - Display with sorting options
-3. **Search Contacts** - Multiple search criteria
-4. **Update Contact** - Modify existing contact details
-5. **Delete Contact** - Remove contact with confirmation
-6. **Import Data** - Load contacts from file
-7. **Export Data** - Save contacts to file
-8. **Exit** - Close application
-
-### Search Options
-1. **Search by Name** (Linear/Binary)
-2. **Search by Phone Number** (Linear)
-3. **Search by Group** (Linear/Binary) 
-4. **Search by City** (Linear/Binary)
-
-### Sorting Options
-1. **Bubble Sort** with runtime display
-2. **Insertion Sort** with runtime display
-3. **Selection Sort** with runtime display
-4. **Quick Sort** with runtime display
-5. **Merge Sort** with runtime display
+### Algorithm Analysis Practice
+- **Time Complexity**: Practical demonstration of O(n), O(log n), O(n²), O(n log n)
+- **Space Complexity**: Memory usage patterns for different algorithm types
+- **Best/Worst Cases**: Real scenarios showing algorithm behavior variations
+- **Performance Measurement**: Empirical analysis using precise timing
 
 ## 🔬 Algorithm Performance Analysis
 
-### Search Algorithm Comparison
-| Algorithm | Time Complexity | Space Complexity | Use Case |
-|-----------|----------------|------------------|----------|
-| Linear Search | O(n) | O(1) | Unsorted data, all field types |
-| Binary Search | O(log n) | O(1) | Sorted data, faster lookups |
+### Search Algorithm Efficiency
+| Algorithm | Time Complexity | Space Complexity | Best Use Case |
+|-----------|----------------|------------------|---------------|
+| **Linear Search** | O(n) | O(1) | Unsorted data, all field types |
+| **Binary Search** | O(log n) | O(1) | Sorted data, faster lookups |
 
 ### Sorting Algorithm Comparison
-| Algorithm | Best Case | Average Case | Worst Case | Space Complexity |
-|-----------|-----------|--------------|------------|------------------|
-| Bubble Sort | O(n) | O(n²) | O(n²) | O(1) |
-| Insertion Sort | O(n) | O(n²) | O(n²) | O(1) |
-| Selection Sort | O(n²) | O(n²) | O(n²) | O(1) |
-| Quick Sort | O(n log n) | O(n log n) | O(n²) | O(log n) |
-| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) |
+| Algorithm | Best Case | Average Case | Worst Case | Space Complexity | Stability |
+|-----------|-----------|--------------|------------|------------------|-----------|
+| **Bubble Sort** | O(n) | O(n²) | O(n²) | O(1) | Stable |
+| **Insertion Sort** | O(n) | O(n²) | O(n²) | O(1) | Stable |
+| **Selection Sort** | O(n²) | O(n²) | O(n²) | O(1) | Unstable |
+| **Quick Sort** | O(n log n) | O(n log n) | O(n²) | O(log n) | Unstable |
+| **Merge Sort** | O(n log n) | O(n log n) | O(n log n) | O(n) | Stable |
 
-## 🛠️ Technical Implementation
+### Runtime Measurement Features
+- **Precise Timing**: `Stopwatch` class for microsecond accuracy
+- **Comparative Analysis**: Side-by-side algorithm performance
+- **Scalability Testing**: Performance across different dataset sizes
+- **Memory Profiling**: Dynamic array expansion monitoring
 
-### Dynamic Array Implementation
+## 🛠️ DSA Implementation Details
+
+### Dynamic Array Architecture
 ```csharp
-// Auto-expanding 2D array for contacts
+// Auto-expanding 2D array with capacity doubling
 if (count >= rows) {
-    rows = rows * 2;  // Double capacity
+    rows = rows * 2;  // Double capacity for O(1) amortized
     string[,] temp = new string[rows, columns];
-    // Copy existing data and add new contact
+    // Efficient copying of existing data
+    Array.Copy(contacts, temp, contacts.Length);
 }
 ```
 
-### Binary Search with Range Finding
+### Binary Search Implementation
 ```csharp
-// Finds all matching entries for group/city searches
-while (firstMatch > 0 && table[firstMatch - 1, 2] == target)
-    firstMatch--;
-while (lastMatch < count - 1 && table[lastMatch + 1, 2] == target)
-    lastMatch++;
+// O(log n) search with range finding for duplicates
+int left = 0, right = count - 1;
+while (left <= right) {
+    int mid = left + (right - left) / 2;
+    int comparison = string.Compare(contacts[mid, field], target);
+    if (comparison == 0) return FindAllMatches(mid, target);
+    else if (comparison < 0) left = mid + 1;
+    else right = mid - 1;
+}
 ```
 
-### Runtime Measurement
+### Performance Monitoring System
 ```csharp
-Stopwatch stopwatch = new Stopwatch();
-stopwatch.Start();
-// Sorting algorithm execution
+// Precise algorithm timing and analysis
+Stopwatch stopwatch = Stopwatch.StartNew();
+PerformSortingAlgorithm(data);
 stopwatch.Stop();
-Console.WriteLine($"Runtime: {stopwatch.Elapsed.TotalMilliseconds} ms");
+Console.WriteLine($"Algorithm: {name} | Runtime: {stopwatch.ElapsedMilliseconds}ms | Comparisons: {comparisonCount}");
 ```
 
-## 🚀 Advanced Features
-
-### Memory Management
-- **Single Instance Pattern**: Prevents memory leaks from object recreation
-- **Navigation Stack**: Efficient screen state management
-- **Resource Disposal**: Proper cleanup of file operations
-
-### Error Handling & Validation
-- **Input Validation**: Custom validators for all user inputs
-- **File Operations**: Comprehensive error handling for import/export
-- **User Feedback**: Clear error messages and success confirmations
-
-### User Experience Enhancements
-- **Loading Animations**: Visual feedback during operations
-- **Colored Messages**: Status-coded feedback system
-- **Confirmation Dialogs**: Prevention of accidental data loss
-- **Consistent Navigation**: Universal navigation options on every screen
-
-## 📚 Educational Value
-
-This project demonstrates key Computer Science concepts:
-
-1. **Data Structures**: Dynamic arrays, 2D arrays, stack-based navigation
-2. **Algorithm Analysis**: Time/space complexity comparison
-3. **Search Techniques**: Linear vs Binary search trade-offs  
-4. **Sorting Algorithms**: Implementation and performance analysis
-5. **Software Engineering**: Modular design, error handling, user experience
-6. **Memory Management**: Efficient resource utilization
-7. **File I/O**: Data persistence and cross-platform compatibility
-
-## 🎯 Learning Outcomes
-
-- Understanding of dynamic data structures and their growth strategies
-- Implementation of classic search and sorting algorithms
-- Performance analysis and runtime measurement techniques
-- User interface design principles for console applications
-- Error handling and input validation best practices
-- File I/O operations and data persistence strategies
-- Memory management and resource optimization
-
-## 🤝 Usage Examples
-
-### Adding a Contact
-1. Select option 1 from main menu
-2. Enter contact details (all fields validated)
-3. Confirmation message displayed
-4. Contact automatically added to dynamic array
-
-### Searching with Binary Search
-1. Select option 3 (Search Contacts)
-2. Choose binary search option (Name/Group/City)
-3. Data automatically sorted before search
-4. Results displayed with formatted table
-
-### Performance Comparison
-1. Add multiple contacts (test data)
-2. Select option 2 (View Contacts)  
-3. Try different sorting algorithms
-4. Compare runtime measurements displayed
-
-## 🔧 Development Notes
-
-### Architecture Decisions
-- **Separation of Concerns**: UI, Logic, and Data layers separated
-- **Single Responsibility**: Each class handles specific functionality
-- **Error Recovery**: Graceful handling of invalid inputs and file errors
-- **Extensibility**: Easy to add new search criteria or sorting algorithms
-
-### Code Quality Features
-- Comprehensive error handling with try-catch blocks
-- Input validation for all user interactions
-- Consistent code formatting and documentation
-- Memory-efficient implementation patterns
+## 🎯 DSA Learning Outcomes
+- **Dynamic Data Structures**: Understanding array expansion, memory management, and amortized analysis
+- **Algorithm Complexity**: Practical experience with time/space complexity analysis and measurement
+- **Search Techniques**: Implementation and comparison of linear vs binary search algorithms
+- **Sorting Algorithms**: Comprehensive study of 5 different sorting approaches with performance metrics
+- **Performance Analysis**: Real-world algorithm timing, comparison, and optimization strategies
+- **Data Structure Design**: Efficient contact storage, retrieval, and manipulation systems
 
 ---
 
-*This project was developed as part of a Data Structures and Algorithms course, demonstrating practical implementation of fundamental CS concepts in a real-world application.*
+*Comprehensive DSA project demonstrating practical implementation of fundamental Computer Science algorithms and data structures with empirical performance analysis.*
